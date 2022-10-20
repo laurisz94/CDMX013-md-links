@@ -1,34 +1,56 @@
 let fs = require('fs'); 
 let path = require('path');  
+//let marked = require('marked');
 
 const validatePath = (paths) => fs.existsSync(paths); //Valida si es un path válido/invalido u existe el archivo RETUNR IMPLICITO
-console.log('Validando Path:' + validatePath('README.md'));
+console.log('Validando Path: ' + validatePath('README.md'));
 
 const validatePathisAbsolute = (paths) => path.isAbsolute(paths);
-console.log('Validando si es ruta absoluta:' + validatePathisAbsolute('/User/developer/laboratoria/CDMX013-md-links/README.md') );
+console.log('Validando si es una ruta absoluta: ' + validatePathisAbsolute('/User/developer/laboratoria/CDMX013-md-links/README.md') );
 
 const pathIsRelative = (paths) => path.resolve(paths) 
-console.log('muestra la ruta absoluta' + pathIsRelative('README.md'));
+console.log('Muestra ahora la ruta absoluta = ' + pathIsRelative('README.md'));
 
 const validateDirectory = (paths) => fs.lstatSync(paths).isDirectory(); 
-console.log('Es directorio?' + validateDirectory('index.js'));
+console.log('Es directorio? = ' + validateDirectory('index.js'));
 
 const validateFile = (file) => fs.lstatSync(file).isFile();
-console.log('Es archivo?' + validateFile('index.js'));
+console.log('Es archivo? = ' + validateFile('index.js'));
 
 const contentDirectory = (paths) => fs.readdirSync(paths); //leer los archivos y guardarlos en un array
 console.log(contentDirectory(__dirname));
 
 const extFile = (file) => path.extname(file) === ".md";
-console.log(extFile('README.md'));
+console.log('Valida si es un archivo MarkDown = ' + extFile('README.md'));
 
 const contentFile = (directory) => fs.readFileSync(directory, 'utf8');
-console.log(contentFile('README.md'));
+//console.log(contentFile('README.md'));
 
-module.exports = {extFile};
-  
-//let ext = path.extname('/User/developer/laboratoria/CDMX013-md-links/README.md'); //Conocer la extensión
-//console.log(ext);
+//const extractLinks = (content) => {
+    /*links = [];
+    const renderer = new marked.Renderer();
+    renderer.links= (href, text, title) => {
+        links.push({
+            href: href,
+        });
+        return links
+//};*/
 
-//let path1 = path.join('user/developer/laboratoria/CDMX013-md-links', './test.js' ); //unir rutas
-//console.log(path1);
+//console.log(extractLinks('README.md'))
+
+const getLinks = (link) => {
+    const links = contentFile(link)
+    const regEx = /\bhttps:\/\/([a-z0-9.a-z0-9\/]+)([-a-z0-9?=_$#\/]+)([.a-z0-9]+)/gi
+    const arrayLinks = links.match(regEx);
+    return arrayLinks  
+}
+  console.log(getLinks('README.md'));
+
+const newArrayLinks = (links) => {
+    const newArray = links.map(({ href, }) => ({ [href]: href }))
+    console.log (newArray('README.md'))
+    }
+
+console.log(newArrayLinks('README.md'));
+
+//module.exports = {extFile};
