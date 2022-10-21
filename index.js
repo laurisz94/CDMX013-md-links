@@ -38,19 +38,21 @@ const contentFile = (directory) => fs.readFileSync(directory, 'utf8');
 
 //console.log(extractLinks('README.md'))
 
-const getLinks = (link) => {
+/*const getLinks = (link) => {
     const links = contentFile(link)
     const regEx = /\bhttps:\/\/([a-z0-9.a-z0-9\/]+)([-a-z0-9?=_$#\/]+)([.a-z0-9]+)/gi
     const arrayLinks = links.match(regEx);
     return arrayLinks  
-}
-  console.log(getLinks('README.md'));
+}*/
+  //console.log(getLinks('README.md'));
 
-const newArrayLinks = (links) => {
+/*const newArrayLinks = (links) => {
     const newArray = links.map(({ href, }) => ({ [href]: href }))
     console.log (newArray('README.md'))
     }
 
-console.log(newArrayLinks('README.md'));
+console.log(newArrayLinks('README.md'));*/
 
-//module.exports = {extFile};
+
+
+module.exports = { contentFile };
