@@ -651,3 +651,5 @@ cuenta utilizando **new Promise()**
 
 Es importante que sepas qué es un **callback** pues las
 promesas los utilizarán.
+
+(https://www.youtube.com/watch?v=Lub5qOmY4JQ1).
