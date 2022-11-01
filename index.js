@@ -11,6 +11,9 @@ console.log('Validando si es una ruta absoluta: ' + validatePathisAbsolute('/Use
 const pathIsRelative = (paths) => path.resolve(paths) 
 console.log('Muestra ahora la ruta absoluta = ' + pathIsRelative('README.md'));
 
+const pathisRelativeorAbsolute = (ruta) => (path.isAbsolute(ruta) ? ruta : path.resolve(ruta));
+console.log('Muestra ahora la ruta absoluta = ' + pathisRelativeorAbsolute('README.md'));
+
 const validateDirectory = (paths) => fs.lstatSync(paths).isDirectory(); 
 console.log('Es directorio? = ' + validateDirectory('index.js'));
 
@@ -55,4 +58,4 @@ console.log(newArrayLinks('README.md'));*/
 
 
 
-module.exports = { contentFile };
+module.exports = { contentFile, pathisRelativeorAbsolute };

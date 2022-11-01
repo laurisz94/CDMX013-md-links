@@ -1,4 +1,6 @@
 const f = require('./index.js');
+const p = require('./validate-link.js')
+//const validateLink = require('./validate-link.js');
 
 //1) devolver -> array de links
 //entra un ruta string -> lista de links
@@ -9,87 +11,51 @@ const getLinks = (ruta) => {
     return arrayLinks
  };
 
-
-
-
-
  //2 devovler -> array de links validados [{link: http..., ok: true},{link: http.., ok: false}]
  //que entra (array de links que son strings) y que debe salir (array de objetos)
-const validarLinks = (arrayLinks) => {
+const newValidatedLinks = (arrayLinks) => {
     //prometer que voy a devolver una array ....
-
-    const promesa = new Promise((resolve,reject)=>{
-
-        const validatedLinks = []
-
-        for(let i=0; i < arrayLinks.length; i++) {
     
-            const link = arrayLinks[i]
-            
-            const promiseDeLink = fetch(link)
-            .then(function(resp) {
-                //console.log(resp);
-                //console.log(resp.statusText);
-               if(resp.statusText == 'OK'){
-                console.log('link Valido')
-                    const newArray = {
-                        href: link,
-                        status: resp.status,
-                        text: resp.statusText,
-                    }
-                    console.log(newArray);
-                    validatedLinks.push(newArray)
-                    return newArray;
-                }else{
-                    console.log('link invalido!');
-                    const newBadArray = {
-                        href: link,
-                        status: resp.status,
-                        text: resp.statusText
-                    }
-                    console.log(newBadArray)
-                    validatedLinks.push(newBadArray)
-                    return newBadArray
-                }
-            })
-            .catch(function(err) {
-                console.log(err.message);
-            })
-        }
-        //promise all
-        // [promise,promise,promise]
-        //[{status,...},promise,{status...}]
+        const validatedLinks = arrayLinks.map(link =>{
+            return p.validateLink(link)
+        })
 
-        console.log('termino_')
-        // resolve()
-    })    
-    
+        //console.log(validatedLinks)
+        return validatedLinks
+    }
 
-}
 
 const mdLinks = (ruta) => {
     //segun una ruta obtener todos los links dentro de ese archivo
     const links = getLinks(ruta)
-    console.log('links obtenidos', links)
     //enviar esos links para ser validados
-    validarLinks(links)
-}
-
+   const fetchValidatedLinks= newValidatedLinks(links)
+ Promise.all(fetchValidatedLinks).then(console.log)
+    } 
+//que se resuelve con un array con un objeto href, file, etc. 
 
 // const stadisticLinks = arrayLinks.length
 // console.log(stadisticLinks);
 
+/* const mdLinks = (path, options) => {
+    //segun una ruta obtener todos los links dentro de ese archivo
+    
+    const links = getLinks(ruta);
+    //enviar esos links para ser validados
+   const fetchValidatedLinks= newValidatedLinks(links);
+ Promise.all(fetchValidatedLinks).then(console.log);
+    } */
 
 console.log(mdLinks('hola.md'))
 
+const totalLinks = (ruta) => {
+    const total = mdLinks(ruta); //promise
+    total.then((allLinks) => {
+      const todos = allLinks.map((linksHref) => linksHref.href.length);
+      console.log("TOTAL", todos);
+      const stats = `total: ${todos}`;
+      console.log(stats);
+    });
+ }
 
-// function prueba() {
-//     const lista = []
-
-//     lista.push(99)
-//     lista.push(99)
-//     lista.push(1)
-//     return lista
-// }
-
-// console.log(prueba())
+ console.log(totalLinks('README.md'))
