@@ -1,5 +1,6 @@
 const f = require('./index.js');
-const p = require('./validate-link.js')
+const p = require('./validate-link.js');
+const r = require('./index.js');
 //const validateLink = require('./validate-link.js');
 
 //1) devolver -> array de links
@@ -10,6 +11,7 @@ const getLinks = (ruta) => {
     const arrayLinks = links.match(regEx);
     return arrayLinks
  };
+
 
  //2 devovler -> array de links validados [{link: http..., ok: true},{link: http.., ok: false}]
  //que entra (array de links que son strings) y que debe salir (array de objetos)
@@ -26,16 +28,22 @@ const newValidatedLinks = (arrayLinks) => {
 
 
 const mdLinks = (ruta) => {
+
     //segun una ruta obtener todos los links dentro de ese archivo
     const links = getLinks(ruta)
     //enviar esos links para ser validados
+    const path = r.pathisRelativeorAbsolute(ruta)
+    console.log(path)
    const fetchValidatedLinks= newValidatedLinks(links)
- Promise.all(fetchValidatedLinks).then(console.log)
-    } 
+ Promise.all(fetchValidatedLinks).then((response) => {
+    console.log(response)
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+     }
+    
 //que se resuelve con un array con un objeto href, file, etc. 
-
-// const stadisticLinks = arrayLinks.length
-// console.log(stadisticLinks);
 
 /* const mdLinks = (path, options) => {
     //segun una ruta obtener todos los links dentro de ese archivo
@@ -48,14 +56,3 @@ const mdLinks = (ruta) => {
 
 console.log(mdLinks('hola.md'))
 
-const totalLinks = (ruta) => {
-    const total = mdLinks(ruta); //promise
-    total.then((allLinks) => {
-      const todos = allLinks.map((linksHref) => linksHref.href.length);
-      console.log("TOTAL", todos);
-      const stats = `total: ${todos}`;
-      console.log(stats);
-    });
- }
-
- console.log(totalLinks('README.md'))

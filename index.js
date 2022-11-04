@@ -3,28 +3,22 @@ let path = require('path');
 //let marked = require('marked');
 
 const validatePath = (paths) => fs.existsSync(paths); //Valida si es un path válido/invalido u existe el archivo RETUNR IMPLICITO
-console.log('Validando Path: ' + validatePath('README.md'));
-
-const validatePathisAbsolute = (paths) => path.isAbsolute(paths);
-console.log('Validando si es una ruta absoluta: ' + validatePathisAbsolute('/User/developer/laboratoria/CDMX013-md-links/README.md') );
-
-const pathIsRelative = (paths) => path.resolve(paths) 
-console.log('Muestra ahora la ruta absoluta = ' + pathIsRelative('README.md'));
+//console.log('Validando Path: ' + validatePath('README.md'));
 
 const pathisRelativeorAbsolute = (ruta) => (path.isAbsolute(ruta) ? ruta : path.resolve(ruta));
-console.log('Muestra ahora la ruta absoluta = ' + pathisRelativeorAbsolute('README.md'));
+//console.log('Muestra ahora la ruta absoluta = ' + pathisRelativeorAbsolute('README.md'));
 
 const validateDirectory = (paths) => fs.lstatSync(paths).isDirectory(); 
-console.log('Es directorio? = ' + validateDirectory('index.js'));
+//console.log('Es directorio? = ' + validateDirectory('index.js'));
 
 const validateFile = (file) => fs.lstatSync(file).isFile();
-console.log('Es archivo? = ' + validateFile('index.js'));
+//console.log('Es archivo? = ' + validateFile('index.js'));
 
 const contentDirectory = (paths) => fs.readdirSync(paths); //leer los archivos y guardarlos en un array
-console.log(contentDirectory(__dirname));
+//console.log(contentDirectory(__dirname));
 
 const extFile = (file) => path.extname(file) === ".md";
-console.log('Valida si es un archivo MarkDown = ' + extFile('README.md'));
+//console.log('Valida si es un archivo MarkDown = ' + extFile('README.md'));
 
 const contentFile = (directory) => fs.readFileSync(directory, 'utf8');
 //console.log(contentFile('README.md'));
