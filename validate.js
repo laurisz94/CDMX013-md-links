@@ -7,19 +7,29 @@ const r = require('./index.js');
 //entra un ruta string -> lista de links
 const getLinks = (ruta) => {
     const links = f.contentFile(ruta)
-    const regEx = /\bhttps:\/\/([a-z0-9.a-z0-9\/]+)([-a-z0-9?=_$#\/]+)([.a-z0-9]+)/gi
+    const regEx = /\[([^\[]+)\](\(.*\))/gm;
     const arrayLinks = links.match(regEx);
+    console.log(arrayLinks)
     return arrayLinks
  };
+ 
+ 
 
-
+/* const getLinks2 = (ruta) => {
+    const links = f.contentFile(ruta)
+    const regEx2 =  /[A-Z]\w+/gi
+    const arrayLinks = links.match(regEx2);
+    return arrayLinks
+ };
+ */
+ 
  //2 devovler -> array de links validados [{link: http..., ok: true},{link: http.., ok: false}]
  //que entra (array de links que son strings) y que debe salir (array de objetos)
-const newValidatedLinks = (arrayLinks) => {
+const newValidatedLinks = (path, arrayLinks) => {
     //prometer que voy a devolver una array ....
     
         const validatedLinks = arrayLinks.map(link =>{
-            return p.validateLink(link)
+            return p.validateLink(path, link)
         })
 
         //console.log(validatedLinks)
@@ -27,14 +37,14 @@ const newValidatedLinks = (arrayLinks) => {
     }
 
 
-const mdLinks = (ruta) => {
+const mdLinks = (path, options) => {
 
     //segun una ruta obtener todos los links dentro de ese archivo
-    const links = getLinks(ruta)
+    const links = getLinks(path)
     //enviar esos links para ser validados
-    const path = r.pathisRelativeorAbsolute(ruta)
-    console.log(path)
-   const fetchValidatedLinks= newValidatedLinks(links)
+    /* const path = r.pathisRelativeorAbsolute(ruta)
+    console.log(path) */
+   const fetchValidatedLinks= newValidatedLinks(path, links)
  Promise.all(fetchValidatedLinks).then((response) => {
     console.log(response)
     })
@@ -54,5 +64,5 @@ const mdLinks = (ruta) => {
  Promise.all(fetchValidatedLinks).then(console.log);
     } */
 
-console.log(mdLinks('hola.md'))
+console.log(mdLinks('README.md'))
 

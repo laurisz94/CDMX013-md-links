@@ -1,8 +1,9 @@
-const r = require('./index.js')
-/* const path = r.pathisRelativeorAbsolute(link)
-console.log(path) */
-const validateLink = (link) => {
-    const path = r.pathisRelativeorAbsolute(link)
+const r = require('./index.js');
+
+  /* const path2 = r.pathisRelativeorAbsolute('hola.md')
+console.log(path2)  */
+ 
+const validateLink = (path, link) => {
    
     return fetch(link)
         .then((response) => {
@@ -28,9 +29,10 @@ const validateLink = (link) => {
 
 
         }).catch((error) => {
+            console.log(error)
              const object = {
                 status: error.message,
-                text: response.statusText,
+                text: error.statusText,
             }
             return object 
         });

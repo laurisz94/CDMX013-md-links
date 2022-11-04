@@ -1,6 +1,8 @@
 let fs = require('fs'); 
 let path = require('path');  
+
 //let marked = require('marked');
+
 
 const validatePath = (paths) => fs.existsSync(paths); //Valida si es un path válido/invalido u existe el archivo RETUNR IMPLICITO
 //console.log('Validando Path: ' + validatePath('README.md'));
@@ -50,6 +52,4 @@ const contentFile = (directory) => fs.readFileSync(directory, 'utf8');
 
 console.log(newArrayLinks('README.md'));*/
 
-
-
-module.exports = { contentFile, pathisRelativeorAbsolute };
+module.exports = { validatePath, validateDirectory, validateFile, contentDirectory, extFile, contentFile, pathisRelativeorAbsolute };
