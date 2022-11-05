@@ -1,7 +1,4 @@
 const r = require('./index.js');
-
-  /* const path2 = r.pathisRelativeorAbsolute('hola.md')
-console.log(path2)  */
  
 const validateLink = (path, link) => {
    
@@ -11,7 +8,6 @@ const validateLink = (path, link) => {
             const object = {
                 href: link,
                 status: response.status,
-                text: response.statusText,
                 file: path,
                 message: 'OK'
             }
@@ -20,7 +16,6 @@ const validateLink = (path, link) => {
             const object = {
                 href: link,
                 status: response.status,
-                text: response.statusText,
                 file: path,
                 message: 'Fail'
             }
