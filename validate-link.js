@@ -1,36 +1,39 @@
 const r = require('./index.js');
  
-const validateLink = (path, link) => {
-   
-    return fetch(link)
-        .then((response) => {
-            if(response.status === 200) { 
-            const object = {
-                href: link,
-                status: response.status,
-                file: path,
-                message: 'OK'
-            }
-            return object 
-        }else {
-            const object = {
-                href: link,
-                status: response.status,
-                file: path,
-                message: 'Fail'
-            }
-            return object 
+const validateLink = (link) => {
+   const validatedLinks = link.map(link => {
+    return fetch(link.href)
+    .then((response) => {
+        if(response.status === 200) { 
+        const object = {
+            href: link.href,
+            status: response.status,
+            text: link.text,
+            file: link.file,
+            OK: 'OK'
         }
-
-
-        }).catch((error) => {
-            console.log(error)
-             const object = {
-                status: error.message,
-                text: error.statusText,
-            }
-            return object 
-        });
+        return object 
+    }else {
+        const object = {
+            href: link.href,
+            status: response.status,
+            text: link.text,
+            file: link.file,
+            OK: 'Fail'
+        }
+        return object 
+    }
+    }).catch((error) => {
+        console.log(error)
+         const object = {
+            status: error.message,
+            text: error.statusText,
+        }
+        return object 
+    });
+   })
+   //console.log(validatedLinks)
+   return validatedLinks
 }
 
 module.exports = { validateLink}
