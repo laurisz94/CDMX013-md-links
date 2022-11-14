@@ -1,10 +1,11 @@
-const mdLinks = require('../');
+const mdLinks = require('../validate.js');
+
 
 
 describe('mdLinks', () => {
 
-  it('should...', () => {
-    console.log('FIX ME!');
+  it('it is a function', () => {
+    expect(typeof mdLinks).toBe('function');
   });
 
 });
